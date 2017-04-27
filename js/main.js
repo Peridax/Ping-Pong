@@ -1,4 +1,4 @@
-// Keep in mind that this was just a coding challenge and this was made in less than 2 days
+// Keep in mind that this was just a coding challenge.
 // Made by Peridax & Jefemy
 class Vec {
     constructor(x = 0, y = 0) {
@@ -79,9 +79,7 @@ class Core {
         this.paddleSpeed = 180; // Paddle speed, self explanatory
 
         this._canvas = document.getElementById('game');
-        this._ctx = this._canvas.getContext('2d', {
-            antialias: true
-        });
+        this._ctx = this._canvas.getContext('2d');
         this._lastUpdate = Date.now();
         this._ball = new Ball();
         this._p1 = new Pong();
