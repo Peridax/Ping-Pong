@@ -1,4 +1,4 @@
-// Keep in mind that this was just a coding challenge and this was made in less than 2 days
+// Keep in mind that this was just a coding challenge.
 // Made by Peridax & Jefemy
 
 class Vec {
@@ -75,7 +75,7 @@ class Pong extends Rect {
 
 class Core {
 	constructor() {
-		this.debug = true;				// Debug mode
+		this.debug = true;			// Debug mode
 		this.acceleration = true;		// Accelerate the ball's x velocity on paddle collision
 		this.paddleSpeed = 180;			// Paddle speed, self explanatory
 
