@@ -80,7 +80,7 @@ class Core {
 		this.paddleSpeed = 180;			// Paddle speed, self explanatory
 
 		this._canvas = document.getElementById('game');
-		this._ctx = this._canvas.getContext('2d', {antialias: true});
+		this._ctx = this._canvas.getContext('2d');
 		this._lastUpdate = Date.now();
 		this._ball = new Ball();
 		this._p1 = new Pong();
