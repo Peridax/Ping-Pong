@@ -75,7 +75,7 @@ class Core {
     constructor() {
         this.debug = true; // Debug mode
         this.acceleration = true; // Accelerate the ball's x velocity on paddle collision
-        this.paddleSpeed = 180; // Paddle speed, self explanatory
+        this.paddleSpeed = 260; // Paddle speed, self explanatory
 
         this._canvas = document.getElementById('game');
         this._ctx = this._canvas.getContext('2d');
@@ -94,9 +94,10 @@ class Core {
         this._p2.pos.y = this._canvas.height / 2 - this._p2.size.y / 2;
         this._ball.pos.x = this._canvas.width / 2 - this._ball.size.x / 2;
         this._ball.pos.y = this._canvas.height / 2 - this._ball.size.y / 2;
-        this._ball.vel.x = 250;
+        this._ball.vel.x = 300;
         this._ball.vel.y = Math.floor(Math.random() * 150) - 75;
 
         this._firstgame = true;
+        this._repeat;
     }
 }

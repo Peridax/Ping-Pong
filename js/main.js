@@ -1,10 +1,15 @@
 // Initializing game data & variables
 const core = new Core();
+var winner = document.getElementById('winner');
+var gui = document.getElementById('gui');
+var menu = document.querySelector('.menu-container');
 var p1score = document.getElementById('p1score');
 var p2score = document.getElementById('p2score');
+var btn = document.querySelector('.start-btn');
+var menutitle = document.querySelector('.title');
 
 // Event Listeners
-function keyListen() {
+function keyListen(e) {
 	core._p1.vel.y = 0;
 	core._p2.vel.y = 0;
 
@@ -13,27 +18,24 @@ function keyListen() {
 			core._p1.vel.y = -core.paddleSpeed;
 		} else if (key == 83) {
 			core._p1.vel.y = core.paddleSpeed;
-		} else {
-			core._p2.vel.y = 0; 
 		}
-		if (key == 73) {
+
+		if (key == 38) {
 			core._p2.vel.y = -core.paddleSpeed;
-		} else if (key == 75) {
+		} else if (key == 40) {
 			core._p2.vel.y = core.paddleSpeed;
-		} else {
-			core._p2.vel.y = 0;
 		}
 	}
 }
 
 window.addEventListener("keydown", function(e) {
 	core._keysDown[e.keyCode] = true;
-	keyListen();
+	keyListen(e);
 });
 
 window.addEventListener("keyup", function(e) {
 	delete core._keysDown[e.keyCode];
-	keyListen();
+	keyListen(e);
 });
 
 // Game initializing function
@@ -42,9 +44,19 @@ function callback() {
 	var dt = now - core._lastUpdate;
 	core._lastUpdate = now;
 
+	if (core._firstgame) {
+		core._p1Score = 0;
+		core._p2Score = 0;
+
+		core._canvas.style.display = 'block';
+		gui.style.display = 'flex';
+		menu.style.display = 'none';
+	};
+
 	update(dt);
 	draw();
-	requestAnimationFrame(callback);
+	
+	core._repeat = requestAnimationFrame(callback);
 }
 
 function update(delta) {
@@ -68,6 +80,7 @@ function update(delta) {
 				core._ball.vel.x = -core._ball.vel.x;
 				reset();
 			}
+
 			if (core._ball.bottom > core._canvas.height || core._ball.top < 0) {
 				core._ball.vel.y = -core._ball.vel.y;
 			}
@@ -113,17 +126,17 @@ function update(delta) {
 				// Accelerating the ball's X velocity
 				if (core.acceleration) {
 					if (core._ball.vel.x > 0) {
-						core._ball.vel.x += 5;
+						core._ball.vel.x += 17;
 					} else if (core._ball.vel.x < 0) {
-						core._ball.vel.x -= 5;
+						core._ball.vel.x -= 17;
 					} else {
-						core._ball.vel.x = (Math.round(Math.random() * 1 - (5 - 5) + 5));
+						core._ball.vel.x = (Math.round(Math.random() * 1 - (17 - 17) + 17));
 					}
 					console.log('Ball\'s X velocity: ' + core._ball.vel.x);
 				}
 			}
 
-			// Move core._ball if behind paddle
+			// Move ball if behind paddle
 			if ((core._ball.left <= core._p1.left || core._ball.right <= core._p1.left) && core._ball.top < core._p1.bottom && core._ball.bottom > core._p1.top) {
 				core._ball.pos.x = core._ball.pos.x + (core._p1.right - core._p1.left);
 			} else if ((core._ball.left >= core._p2.left || core._ball.right >= core._p2.left) && core._ball.top > core._p2.bottom && core._ball.bottom < core._p2.top) {
@@ -198,7 +211,28 @@ function reset() {
 	p1score.innerHTML = core._p1Score;
 	p2score.innerHTML = core._p2Score;
 
-	setTimeout(function() {
-		core._over = false;
-	}, 3000);
+	if (core._p1Score < 3 && core._p2Score < 3) {
+		setTimeout(function() {
+			core._over = false;
+		}, 3000);
+	} else {
+		core._over = true;
+
+		if (core._p1Score >= 3) {
+			menutitle.innerHTML = 'Player 1 won!';
+		}
+		
+		if (core._p2Score >= 3) {
+			menutitle.innerHTML = 'Player 2 won!';
+		};
+
+		btn.innerHTML = 'Play Again';
+		menu.style.display = 'block';
+		core._canvas.style.display = 'none';
+		gui.style.display = 'none';
+
+		btn.onclick = function() {
+			location.reload();
+		}
+	}
 }
