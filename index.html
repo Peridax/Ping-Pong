@@ -4,20 +4,37 @@
 <head>
 	<title>Pong</title>
 	<style>
-  		body {
-          	margin: 0;
-        }
+	body {
+		margin: 0;
+	}
 
-      canvas {
-        	margin: 20px auto;
-        	display: block;
-      }
+	canvas {
+		margin: 20px auto;
+		display: block;
+	}
+
+	.gui {
+		display: flex;
+		position: fixed; 
+		left: 50%;
+		transform: translateX(-50%);
+		margin-top: 15px;
+		font-size: 64px;
+		letter-spacing: 15px;
+		color: #fff;
+	}
 	</style>
 </head>
 
 <body>
-      <canvas id="game" height="500" width="700"></canvas>
-      <script src="js/main.js"></script>
+	<div class="gui">
+		<div id="p1score">0</div>
+		<div id="p2score">0</div>
+	</div>
+	<canvas id="game" height="500" width="700"></canvas>
+
+	<script src="js/classes.js"></script>
+	<script src="js/main.js"></script>
 </body>
   
 </html>
